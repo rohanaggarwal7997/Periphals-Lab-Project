@@ -32,7 +32,7 @@ client.connect("172.16.114.166",1883,60)
 while(1):
 
 	# uncomment if you don't want dynamic input amd comment the non commented part
-	
+	'''
 	val = input_char('')
 	if(val=="l"):
 		client.publish("topic/test", "left")
@@ -46,7 +46,7 @@ while(1):
 	else:
 		client.publish("topic/test", "right");
 	time.sleep(0.1)
-	'''
+	
 
 
 client.disconnect();

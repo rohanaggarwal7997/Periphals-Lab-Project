@@ -21,7 +21,7 @@ GPIO.setup(Motor_B,GPIO.OUT)
 GPIO.output(Motor_A, True)
 GPIO.output(Motor_B, False)
 
-
+start=time.time()
 # This is the Subscriber
 
 def on_connect(client, userdata, flags, rc):
@@ -38,6 +38,10 @@ def on_message(client, userdata, msg):
 	    GPIO.output(Motor_B, True)
 	    time.sleep(1)
 
+	end=time.time()
+	if(end-start>30):
+		client.disconnect()
+
 
     #client.disconnect()
 
@@ -50,11 +54,21 @@ try:
 		client.on_message = on_message
 
 		client.loop_forever()
+
+		client.connect("172.16.114.166",1883,60)
+		client.publish("topic/test2", "Game OVER");
+		client.disconnect()
+		break
+
+
 except KeyboardInterrupt:
         print("Stopped by User!")
         GPIO.cleanup()
         time.sleep(1)
 
+
+GPIO.cleanup()
+time.sleep(1)
 
 # time.sleep(5)
 
